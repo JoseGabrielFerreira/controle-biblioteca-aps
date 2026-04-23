@@ -18,25 +18,25 @@ Aplicativo Android desenvolvido em Java para gerenciamento de livros, clientes e
 ## 📱 Screenshots
 
 ### 🏠 Menu Principal
-![Menu](./screenshots/Screenshot_20260422_224635.png)
+![Menu](screenshots/menu.png)
 
 ### 📚 Cadastro de Livros
-![Cadastro Livro](./screenshots/Screenshot_20260422_225129.png)
+![Cadastro Livro](screenshots/cadastro-livro.png)
 
 ### 📖 Livro Cadastrado
-![Livro](./screenshots/Screenshot_20260422_225142.png)
+![Livro](screenshots/livro-cadastrado.png)
 
 ### 👤 Cadastro de Clientes
-![Cliente](./screenshots/Screenshot_20260422_225326.png)
+![Cliente](screenshots/cadastro-cliente.png)
 
 ### 👥 Cliente Cadastrado
-![Cliente2](./screenshots/Screenshot_20260422_225346.png)
+![Cliente2](screenshots/cliente-cadastrado.png)
 
 ### 🔄 Tela de Empréstimos
-![Emprestimo](./screenshots/Screenshot_20260422_225537.png)
+![Emprestimo](screenshots/emprestimo.png)
 
 ### 📋 Resultado do Empréstimo
-![Resultado](./screenshots/Screenshot_20260422_225555.png)
+![Resultado](screenshots/emprestimo-realizado.png)
 
 ---
 
