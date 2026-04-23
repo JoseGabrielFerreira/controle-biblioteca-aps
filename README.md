@@ -39,7 +39,7 @@ Aplicativo Android desenvolvido em Java para gerenciamento de livros, clientes e
 
 - Java  
 - Android Studio  
-- XML (Layouts)  
+
 
 ---
 
