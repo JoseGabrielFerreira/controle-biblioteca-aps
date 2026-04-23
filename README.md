@@ -1,60 +1,76 @@
-# 📚 Sistema de Biblioteca (APS)
+# 💻 Sistema de Controle de Biblioteca
 
-Projeto acadêmico desenvolvido como parte da APS (Atividade Prática Supervisionada) do curso de Ciência da Computação.
-
----
-
-## 🚀 Sobre o projeto
-
-Aplicação desenvolvida em Java (Android) com o objetivo de simular um sistema de controle de biblioteca, permitindo o cadastro e gerenciamento de livros, clientes e empréstimos.
-
-Nesta primeira versão (APS 1), os dados são armazenados em memória utilizando ArrayList, com foco na prática de lógica de programação, organização de dados e navegação entre telas.
+Aplicativo Android desenvolvido em Java para gerenciamento de livros, clientes e empréstimos.
 
 ---
 
-## ⚙️ Funcionalidades
+## 🚀 Funcionalidades
 
-* Cadastro de livros
-* Cadastro de clientes
-* Registro de empréstimos
-* Navegação entre telas
-* Validação de dados
-
----
-
-## 🛠️ Tecnologias utilizadas
-
-* Java
-* Android Studio
-* ArrayList (armazenamento em memória)
+- 📚 Cadastro de livros  
+- 📖 Listagem de livros cadastrados  
+- 👤 Cadastro de clientes  
+- 👥 Listagem de clientes  
+- 🔄 Registro de empréstimos  
+- 📋 Visualização de empréstimos  
 
 ---
 
-## 📌 Status do projeto
+## 📱 Screenshots
 
-APS 1 concluído (nota: 0,80/1,0)
-APS 2 em desenvolvimento 🚧
+### 🏠 Menu Principal
+![Menu](./screenshots/Screenshot_20260422_224635.png)
+
+### 📚 Cadastro de Livros
+![Cadastro Livro](./screenshots/Screenshot_20260422_225129.png)
+
+### 📖 Livro Cadastrado
+![Livro](./screenshots/Screenshot_20260422_225142.png)
+
+### 👤 Cadastro de Clientes
+![Cliente](./screenshots/Screenshot_20260422_225326.png)
+
+### 👥 Cliente Cadastrado
+![Cliente2](./screenshots/Screenshot_20260422_225346.png)
+
+### 🔄 Tela de Empréstimos
+![Emprestimo](./screenshots/Screenshot_20260422_225537.png)
+
+### 📋 Resultado do Empréstimo
+![Resultado](./screenshots/Screenshot_20260422_225555.png)
 
 ---
 
-## 🔮 Próximas melhorias (APS 2)
+## 🛠️ Tecnologias Utilizadas
 
-* Integração com banco de dados
-* Sistema de autenticação (login)
-* Diferenciação de perfis (Administrador e Usuário)
-* Inclusão de imagens dos livros (estado físico: novo, usado, desgastado)
-* Sistema de busca e filtro por gênero
-* Funcionalidade de venda de livros
-* Interface dedicada para usuários finais
-* Melhorias na experiência do usuário (UI/UX)
+- Java  
+- Android Studio  
+- XML (Layouts)  
 
 ---
 
-## 💡 Objetivo do projeto
+## 🎯 Objetivo do Projeto
 
-Praticar conceitos fundamentais de desenvolvimento de software, como lógica de programação, estruturação de sistemas e organização de dados, além de evoluir o projeto progressivamente com novas funcionalidades.
+Este projeto foi desenvolvido como parte de uma atividade acadêmica (APS), com o objetivo de praticar:
+
+- Lógica de programação  
+- Programação orientada a objetos  
+- Manipulação de dados em memória (ArrayList)  
+- Navegação entre telas no Android  
 
 ---
+
+## 📌 Observações
+
+- Os dados são armazenados em memória (sem banco de dados)  
+- Projeto inicial (versão piloto)  
+- Futuras melhorias incluirão:
+  - Integração com banco de dados  
+  - Sistema de login  
+  - Filtros de busca  
+  - Melhorias na interface  
+
+---
+
 
 ## 👨‍💻 Autores
 José Gabriel Ferreira Batista da Cruz
