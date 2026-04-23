@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuActivity">
+
+    <TextView
+        android:id="@+id/bibliotecatextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Biblioteca Digital"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/deescricaotextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="Gerencie livros, clientes e empréstimos"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bibliotecatextView" />
+
+    <Button
+        android:id="@+id/btn_clientes"
+        android:layout_width="141dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="44dp"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:fontFamily="@font/inter_medium"
+        android:text="CLIENTES"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/btn_livros"
+        android:layout_width="147dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="52dp"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:fontFamily="@font/inter_semibold"
+        android:text="LIVROS"
+        android:textColorLink="@color/white"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_clientes"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+    <Button
+        android:id="@+id/btn_emprestimos"
+        android:layout_width="153dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:fontFamily="@font/inter_medium"
+        android:text="EMPRÉSTIMOS"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sair"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_livros"
+        app:layout_constraintVertical_bias="0.007" />
+
+    <Button
+        android:id="@+id/btn_sair"
+        android:layout_width="145dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="@color/design_default_color_error"
+        android:fontFamily="@font/inter_medium"
+        android:text="SAIR"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_clientes"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="256dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="104dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Selecione uma Opção"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deescricaotextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

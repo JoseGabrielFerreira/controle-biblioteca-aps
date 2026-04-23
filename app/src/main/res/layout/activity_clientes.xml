@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ClientesActivity">
+
+    <TextView
+        android:id="@+id/cadastrartextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Cadastrar Clientes"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/nomeClienteTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/inter_medium"
+        android:hint="Nome"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cadastrartextView" />
+
+    <EditText
+        android:id="@+id/cpfTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/inter_medium"
+        android:hint="CPF"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeClienteTextText" />
+
+    <Button
+        android:id="@+id/btn_cadastrat_cliente"
+        android:layout_width="147dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:fontFamily="@font/inter_medium"
+        android:text="CADASTRAR"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/btn_clientes_cadastrados"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enderecoEditTextText" />
+
+    <Button
+        android:id="@+id/btn_clientes_cadastrados"
+        android:layout_width="163dp"
+        android:layout_height="74dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="40dp"
+        android:text="CLIENTES CADASTRADOS"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enderecoEditTextText" />
+
+    <Button
+        android:id="@+id/btn_voltar_CC"
+        android:layout_width="164dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
+        android:fontFamily="@font/inter_medium"
+        android:text="VOLTAR"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_clientes_cadastrados"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/telefoneEditTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/inter_medium"
+        android:hint="Telefone"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cpfTextText" />
+
+    <EditText
+        android:id="@+id/enderecoEditTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/white"
+        android:ems="10"
+        android:fontFamily="@font/inter_medium"
+        android:hint="Endereço"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/telefoneEditTextText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
