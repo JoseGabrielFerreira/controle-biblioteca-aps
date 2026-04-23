@@ -17,26 +17,21 @@ Aplicativo Android desenvolvido em Java para gerenciamento de livros, clientes e
 
 ## 📱 Screenshots
 
-### 🏠 Menu Principal
-![Menu](screenshots/menu.png)
+<p align="center">
+  <img src="screenshots/menu.png" width="250"/>
+  <img src="screenshots/cadastro-livro.png" width="250"/>
+  <img src="screenshots/livro-cadastrado.png" width="250"/>
+</p>
 
-### 📚 Cadastro de Livros
-![Cadastro Livro](screenshots/cadastro-livro.png)
+<p align="center">
+  <img src="screenshots/cadastro-cliente.png" width="250"/>
+  <img src="screenshots/cliente-cadastrado.png" width="250"/>
+  <img src="screenshots/emprestimo.png" width="250"/>
+</p>
 
-### 📖 Livro Cadastrado
-![Livro](screenshots/livro-cadastrado.png)
-
-### 👤 Cadastro de Clientes
-![Cliente](screenshots/cadastro-cliente.png)
-
-### 👥 Cliente Cadastrado
-![Cliente2](screenshots/cliente-cadastrado.png)
-
-### 🔄 Tela de Empréstimos
-![Emprestimo](screenshots/emprestimo.png)
-
-### 📋 Resultado do Empréstimo
-![Resultado](screenshots/emprestimo-realizado.png)
+<p align="center">
+  <img src="screenshots/emprestimo-realizado.png" width="250"/>
+</p>
 
 ---
 
@@ -71,13 +66,13 @@ Este projeto foi desenvolvido como parte de uma atividade acadêmica (APS), com 
 
 ---
 
-
 ## 👨‍💻 Autores
-José Gabriel Ferreira Batista da Cruz
-🔗 LinkedIn: https://www.linkedin.com/in/josegabrielcruz/
 
-João Pedro Moro
-🔗 LinkedIn: (https://www.linkedin.com/in/joao-moro-a099763bb/)
+**José Gabriel Ferreira Batista da Cruz**  
+🔗 https://www.linkedin.com/in/josegabrielcruz/
 
-Henrique Herrero Vido
-🔗 LinkedIn: (https://www.linkedin.com/in/henrique-vido-414b813aa/)
+**João Pedro Moro**  
+🔗 https://www.linkedin.com/in/joao-moro-a099763bb/
+
+**Henrique Herrero Vido**  
+🔗 https://www.linkedin.com/in/henrique-vido-414b813aa/
