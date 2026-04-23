@@ -1,8 +1,5 @@
 # 💻 Sistema de Controle de Biblioteca
 
-![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
-![Java](https://img.shields.io/badge/Java-Android-blue)
-
 Aplicativo Android desenvolvido em Java para gerenciamento de livros, clientes e empréstimos, simulando um sistema real de controle de biblioteca.
 
 Projeto acadêmico desenvolvido na APS (Atividade Prática Supervisionada) com foco na prática de lógica de programação, estruturação de sistemas e navegação entre telas.
