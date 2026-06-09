@@ -10,11 +10,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
+import br.com.unifaj.controlebibliotecaaps.api.ApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ListaEmprestimosActivity extends AppCompatActivity {
 
-    // DECLARANDO AS VARIÁVEIS
     TextView emprestimos;
     Button voltarTelaEmprestimos;
 
@@ -24,35 +30,87 @@ public class ListaEmprestimosActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lista_emprestimos);
 
-        // RECEBER A LISTA DE EMPRÉSTIMOS
-        ArrayList<String> listaEmprestimos = getIntent().getStringArrayListExtra("emprestimos");
-
-        // // CONECTANDO COMPONENTES DA TELA COM AS VARIÁVEIS DO CÓDIGO
         emprestimos = findViewById(R.id.emprestimolivroText);
-        voltarTelaEmprestimos = findViewById(R.id.btn_voltar_telaEmprestimo);
+        voltarTelaEmprestimos =
+                findViewById(R.id.btn_voltar_telaEmprestimo);
 
-        // MOSTRAR EMPRÉSTIMOS
-        if (listaEmprestimos != null && !listaEmprestimos.isEmpty()) { // SE A LISTA EXISTIR E NÃO ESTIVER VAZIA
+        ApiService apiService =
+                ApiClient.getRetrofit()
+                        .create(ApiService.class);
 
-            emprestimos.setText(""); // DEIXANDO O TEXTVIEW LIMPO
+        apiService.listarEmprestimos()
+                .enqueue(new Callback<List<Emprestimo>>() {
 
-            for (String e : listaEmprestimos) { // PARA CADA EMPRÉSTIMO DENTRO DA LISTA
-                emprestimos.append(e + "\n\n"); // ADICIONA CADA EMPRÉSTIMO NO TEXT VIEW, PULANDO UMA LINHA
-            }
+                    @Override
+                    public void onResponse(
+                            Call<List<Emprestimo>> call,
+                            Response<List<Emprestimo>> response
+                    ) {
 
-        } else { // SENÃO
-            emprestimos.setText("Nenhum empréstimo registrado.");
-        }
+                        if (response.isSuccessful()
+                                && response.body() != null) {
 
-        // BOTÃO VOLTAR
-        voltarTelaEmprestimos.setOnClickListener(v -> {  // RESULTADO QUE NENHUM LIVRO FOI ENCONTRADO
-            finish();
-        });
+                            List<Emprestimo> listaEmprestimos =
+                                    response.body();
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+                            emprestimos.setText("");
+
+                            for (Emprestimo e : listaEmprestimos) {
+
+                                emprestimos.append(
+                                        "CPF: " + e.getClienteCpf() +
+                                                "\nISBN: " + e.getLivroIsbn() +
+                                                "\nData Empréstimo: " + e.getDataEmprestimo() +
+                                                "\nData Devolução: " + e.getDataDevolucao() +
+                                                "\nStatus: " + e.getStatus() +
+                                                "\n\n"
+                                );
+                            }
+
+                        } else {
+
+                            emprestimos.setText(
+                                    "Nenhum empréstimo encontrado."
+                            );
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<Emprestimo>> call,
+                            Throwable t
+                    ) {
+
+                        emprestimos.setText(
+                                "Erro ao conectar ao servidor."
+                        );
+
+                        t.printStackTrace();
+                    }
+                });
+
+        voltarTelaEmprestimos.setOnClickListener(
+                v -> finish()
+        );
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+                findViewById(R.id.main),
+                (v, insets) -> {
+
+                    Insets systemBars =
+                            insets.getInsets(
+                                    WindowInsetsCompat.Type.systemBars()
+                            );
+
+                    v.setPadding(
+                            systemBars.left,
+                            systemBars.top,
+                            systemBars.right,
+                            systemBars.bottom
+                    );
+
+                    return insets;
+                }
+        );
     }
 }

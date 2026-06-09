@@ -12,13 +12,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
+import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
+import br.com.unifaj.controlebibliotecaaps.api.ApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ClientesActivity extends AppCompatActivity {
-    //LISTA QUE GUARDA OS CLIENTES CADASTRADOS
-    ArrayList<String> listaClientes = new ArrayList<>();
 
-    //DECLARANDO AS VARIÁVEIS DO CÓDIGO
     EditText nome, cpf, telefone, endereco;
     Button cadastrarClientes, clientesCadastrados, voltarCC;
 
@@ -28,57 +30,126 @@ public class ClientesActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_clientes);
 
-        // CONECTANDO AS VARIÁVEIS DO CÓDIGO COM OS COMPONENTES DA TELA
         nome = findViewById(R.id.nomeClienteTextText);
         cpf = findViewById(R.id.cpfTextText);
         telefone = findViewById(R.id.telefoneEditTextText);
         endereco = findViewById(R.id.enderecoEditTextText);
+
         cadastrarClientes = findViewById(R.id.btn_cadastrat_cliente);
         clientesCadastrados = findViewById(R.id.btn_clientes_cadastrados);
         voltarCC = findViewById(R.id.btn_voltar_CC);
 
-        //AÇÃO DO BOTÃO CADASTRAR CLIENTES
         cadastrarClientes.setOnClickListener(v -> {
 
-            //PEGA OS DADOS DO USUÁRIO E CONVERTE PARA STRING
-            String nomeStr = nome.getText().toString();
-            String cpfStr = cpf.getText().toString();
-            String telefoneStr = telefone.getText().toString();
-            String enderecoStr = endereco.getText().toString();
+            String nomeStr = nome.getText().toString().trim();
+            String cpfStr = cpf.getText().toString().trim();
+            String telefoneStr = telefone.getText().toString().trim();
+            String emailStr = endereco.getText().toString().trim();
 
-            // MENSAGEM FALANDO QUE O CLIENTE FOI CADSTRADO
-            Toast.makeText(this, "Cliente cadastrado com sucesso: " + nomeStr, Toast.LENGTH_SHORT).show();
+            if (nomeStr.isEmpty()
+                    || cpfStr.isEmpty()
+                    || telefoneStr.isEmpty()
+                    || emailStr.isEmpty()) {
 
-            // CRIANDO O CLIENTE
-            String cliente = nomeStr + " - CPF: "+ cpfStr;
+                Toast.makeText(
+                        ClientesActivity.this,
+                        "Preencha todos os campos",
+                        Toast.LENGTH_SHORT
+                ).show();
 
-            //SALVANDO CLIENTE NA LISTA
-            listaClientes.add(cliente);
+                return;
+            }
 
-            // LIMPAR OS CAMPOS
-            nome.setText("");
-            cpf.setText("");
-            telefone.setText("");
-            endereco.setText("");
+            Cliente cliente = new Cliente(
+                    nomeStr,
+                    cpfStr,
+                    telefoneStr,
+                    emailStr
+            );
 
+            ApiService apiService =
+                    ApiClient.getRetrofit()
+                            .create(ApiService.class);
+
+            apiService.cadastrarCliente(cliente)
+                    .enqueue(new Callback<Void>() {
+
+                        @Override
+                        public void onResponse(
+                                Call<Void> call,
+                                Response<Void> response
+                        ) {
+
+                            if (response.isSuccessful()) {
+
+                                Toast.makeText(
+                                        ClientesActivity.this,
+                                        "Cliente cadastrado com sucesso!",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                nome.setText("");
+                                cpf.setText("");
+                                telefone.setText("");
+                                endereco.setText("");
+
+                            } else {
+
+                                Toast.makeText(
+                                        ClientesActivity.this,
+                                        "Erro ao cadastrar cliente",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<Void> call,
+                                Throwable t
+                        ) {
+
+                            Toast.makeText(
+                                    ClientesActivity.this,
+                                    "Erro ao conectar com servidor",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                            t.printStackTrace();
+                        }
+                    });
         });
 
         clientesCadastrados.setOnClickListener(v -> {
-            Intent intent = new Intent(ClientesActivity.this, ListaClientesActivity.class);
-            intent.putStringArrayListExtra("clientes", listaClientes); // LEVANDO A LISTA DE LIVROS DESSA TELA PARA A TELA LISTA CLIENTES
+
+            Intent intent = new Intent(
+                    ClientesActivity.this,
+                    ListaClientesActivity.class
+            );
+
             startActivity(intent);
         });
 
-        // AÇÃO DO BOTÃO VOLTAR, QUANDO FOR CLICADO DEVE VOLTAR PARA A PÁGINA ANTERIOR
-        voltarCC.setOnClickListener(v -> {
-            finish();
-        });
+        voltarCC.setOnClickListener(v -> finish());
 
+        ViewCompat.setOnApplyWindowInsetsListener(
+                findViewById(R.id.main),
+                (v, insets) -> {
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+                    Insets systemBars =
+                            insets.getInsets(
+                                    WindowInsetsCompat.Type.systemBars()
+                            );
+
+                    v.setPadding(
+                            systemBars.left,
+                            systemBars.top,
+                            systemBars.right,
+                            systemBars.bottom
+                    );
+
+                    return insets;
+                }
+        );
     }
 }

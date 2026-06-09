@@ -12,14 +12,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
+import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
+import br.com.unifaj.controlebibliotecaaps.api.ApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EmprestimoActivity extends AppCompatActivity {
 
-    // LISTA DE EMPRÉSTIMOS
-    ArrayList<String> listaEmprestimos = new ArrayList<>();
 
-    // DECLARANDO AS VARIÁVEIS
     EditText cliente, livro, data, prazo;
     Button registrar, verEmprestimos, voltar;
 
@@ -29,7 +31,6 @@ public class EmprestimoActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_emprestimo);
 
-        // CONECTANDO AS VARIÁVEIS DO CÓDIGO COM OS COMPONENTES DA TELA
         cliente = findViewById(R.id.nomeClienteeditText);
         livro = findViewById(R.id.livroEmprestimoeditText);
         data = findViewById(R.id.dataEmprestimo_editTextText);
@@ -39,53 +40,120 @@ public class EmprestimoActivity extends AppCompatActivity {
         verEmprestimos = findViewById(R.id.btn_verEmprestimos);
         voltar = findViewById(R.id.btn_voltarEmprestimos);
 
-        // BOTÃO REGISTRAR
         registrar.setOnClickListener(v -> {
 
-            String clienteStr = cliente.getText().toString();
-            String livroStr = livro.getText().toString();
-            String dataStr = data.getText().toString();
-            String prazoStr = prazo.getText().toString();
+            String clienteStr = cliente.getText().toString().trim();
+            String livroStr = livro.getText().toString().trim();
+            String dataStr = data.getText().toString().trim();
+            String prazoStr = prazo.getText().toString().trim();
 
-            //  Se qualquer campo estiver vazio, mostra uma mensagem e interrompe a execução
-            if (clienteStr.isEmpty() || livroStr.isEmpty() || dataStr.isEmpty() || prazoStr.isEmpty()) {
-                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+            if (clienteStr.isEmpty()
+                    || livroStr.isEmpty()
+                    || dataStr.isEmpty()
+                    || prazoStr.isEmpty()) {
+
+                Toast.makeText(
+                        this,
+                        "Preencha todos os campos",
+                        Toast.LENGTH_SHORT
+                ).show();
+
                 return;
             }
 
-            // CRIANDO EMPRÉSTIMO
-            String emprestimo = clienteStr + " pegou " + livroStr +
-                    "\nData: " + dataStr +
-                    "\nPrazo: " + prazoStr + " dias";
+            Emprestimo emprestimo = new Emprestimo(
+                    clienteStr,
+                    livroStr,
+                    dataStr,
+                    prazoStr,
+                    "EMPRESTADO"
+            );
 
-            // SALVANDO EMPRESTIMO NA LISTA
-            listaEmprestimos.add(emprestimo);
+            ApiService apiService =
+                    ApiClient.getRetrofit()
+                            .create(ApiService.class);
 
-            Toast.makeText(this, "Empréstimo registrado!", Toast.LENGTH_SHORT).show();
+            apiService.cadastrarEmprestimo(emprestimo)
+                    .enqueue(new Callback<Void>() {
 
-            // LIMPAR CAMPOS
-            cliente.setText("");
-            livro.setText("");
-            data.setText("");
-            prazo.setText("");
+                        @Override
+                        public void onResponse(
+                                Call<Void> call,
+                                Response<Void> response
+                        ) {
+
+                            if (response.isSuccessful()) {
+
+                                Toast.makeText(
+                                        EmprestimoActivity.this,
+                                        "Empréstimo registrado!",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                cliente.setText("");
+                                livro.setText("");
+                                data.setText("");
+                                prazo.setText("");
+
+                            } else {
+
+                                Toast.makeText(
+                                        EmprestimoActivity.this,
+                                        "Erro ao registrar empréstimo",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<Void> call,
+                                Throwable t
+                        ) {
+
+                            Toast.makeText(
+                                    EmprestimoActivity.this,
+                                    "Erro ao conectar ao servidor",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                            t.printStackTrace();
+                        }
+                    });
         });
 
-        // BOTÃO VER EMPRÉSTIMOS
         verEmprestimos.setOnClickListener(v -> {
-            Intent intent = new Intent(EmprestimoActivity.this, ListaEmprestimosActivity.class); // LEVANDO A LISTA DE LIVROS DESSA TELA PARA A TELA EMPRESTIMOS
-            intent.putStringArrayListExtra("emprestimos", listaEmprestimos);
+
+            Intent intent = new Intent(
+                    EmprestimoActivity.this,
+                    ListaEmprestimosActivity.class
+            );
+
             startActivity(intent);
         });
 
-        // BOTÃO VOLTAR
-        voltar.setOnClickListener(v -> {
-            finish();
-        });
+        voltar.setOnClickListener(v -> finish());
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        ViewCompat.setOnApplyWindowInsetsListener(
+                findViewById(R.id.main),
+                (v, insets) -> {
+
+                    Insets systemBars =
+                           insets.getInsets(
+                                    WindowInsetsCompat.Type.systemBars()
+                            );
+
+                    v.setPadding(
+                            systemBars.left,
+                            systemBars.top,
+                            systemBars.right,
+                            systemBars.bottom
+                    );
+
+                    return insets;
+                }
+        );
     }
+
+
 }

@@ -10,11 +10,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
+import br.com.unifaj.controlebibliotecaaps.api.ApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ListaClientesActivity extends AppCompatActivity {
 
-    // DECLARANDO AS VARIÁVEIS
     TextView clientes;
     Button voltarTelaClientesCadastrados;
 
@@ -24,35 +30,86 @@ public class ListaClientesActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_clientes_cadastrados);
 
-        // RECEBER A LISTA DE CLIENTES
-        ArrayList<String> listaClientes = getIntent().getStringArrayListExtra("clientes");
-
-        // CONECTANDO COMPONENTES DA TELA COM AS VARIÁVEIS DO CÓDIGO
         clientes = findViewById(R.id.clientestextView);
-        voltarTelaClientesCadastrados = findViewById(R.id.btn_voltar_telaclientes_cadastrados);
 
-        // MOSTRAR CLIENTES
-        if (listaClientes != null && !listaClientes.isEmpty()) { // SE A LISTA EXISTIR E NÃO ESTIVER VAZIA
+        voltarTelaClientesCadastrados =
+                findViewById(R.id.btn_voltar_telaclientes_cadastrados);
 
-            clientes.setText(""); //DEIXANDO O TEXTVIEW LIMPO
+        ApiService apiService =
+                ApiClient.getRetrofit().create(ApiService.class);
 
-            for (String cliente : listaClientes) { // PARA CADA CLIENTE DENTRO DA LISTA
-                clientes.append(cliente + "\n\n"); // ADICIONA CADA CLIENTE NO TEXT VIEW, PULANDO UMA LINHA
-            }
+        apiService.listarClientes()
+                .enqueue(new Callback<List<Cliente>>() {
 
-        } else { // SENÃO
-            clientes.setText("Nenhum cliente cadastrado."); // RESULTADO QUE NENHUM CLIENTE FOI ENCONTRADO
-        }
+                    @Override
+                    public void onResponse(
+                            Call<List<Cliente>> call,
+                            Response<List<Cliente>> response
+                    ) {
 
-        // BOTÃO VOLTAR
-        voltarTelaClientesCadastrados.setOnClickListener(v -> {
-            finish();
-        });
+                        if (response.isSuccessful()
+                                && response.body() != null) {
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+                            List<Cliente> listaClientes =
+                                    response.body();
+
+                            clientes.setText("");
+
+                            for (Cliente cliente : listaClientes) {
+
+                                clientes.append(
+                                        "Nome: " + cliente.getNome() +
+                                                "\nCPF: " + cliente.getCpf() +
+                                                "\nTelefone: " + cliente.getTelefone() +
+                                                "\nEmail: " + cliente.getEmail() +
+                                                "\n\n"
+                                );
+                            }
+
+                        } else {
+
+                            clientes.setText(
+                                    "Nenhum cliente encontrado."
+                            );
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(
+                            Call<List<Cliente>> call,
+                            Throwable t
+                    ) {
+
+                        clientes.setText(
+                                "Erro ao conectar ao servidor."
+                        );
+
+                        t.printStackTrace();
+                    }
+                });
+
+        voltarTelaClientesCadastrados.setOnClickListener(
+                v -> finish()
+        );
+
+        ViewCompat.setOnApplyWindowInsetsListener(
+                findViewById(R.id.main),
+                (v, insets) -> {
+
+                    Insets systemBars =
+                            insets.getInsets(
+                                    WindowInsetsCompat.Type.systemBars()
+                            );
+
+                    v.setPadding(
+                            systemBars.left,
+                            systemBars.top,
+                            systemBars.right,
+                            systemBars.bottom
+                    );
+
+                    return insets;
+                }
+        );
     }
 }

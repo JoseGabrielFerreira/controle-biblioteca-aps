@@ -1,10 +1,10 @@
 package br.com.unifaj.controlebibliotecaaps;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.Intent;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,16 +12,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.util.ArrayList;
+import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
+import br.com.unifaj.controlebibliotecaaps.api.ApiService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LivrosActivity extends AppCompatActivity {
 
-    // Lista que guarda os livros cadastrados
-    ArrayList<String> listaLivros = new ArrayList<>();
-
-    //DECLARANDO AS VARIÁVEIS DO CÓDIGO
     EditText titulo, autor, isbn, genero, numPaginas;
-    Button cadastrar, voltar, mostrarLivros;
+    Button cadastrar, mostrarLivros, voltar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,60 +30,133 @@ public class LivrosActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_livros);
 
-        // CONECTANDO AS VARIÁVEIS DO CÓDIGO COM OS COMPONENTES DA TELA
         titulo = findViewById(R.id.titulo_editText);
         autor = findViewById(R.id.autor_editText);
         isbn = findViewById(R.id.isbn_editText);
         genero = findViewById(R.id.genero_editText);
         numPaginas = findViewById(R.id.numpg_editText);
+
         cadastrar = findViewById(R.id.btn_cadastrar);
         mostrarLivros = findViewById(R.id.btn_mostrarLivros);
         voltar = findViewById(R.id.btn_voltar);
 
-        // AÇÃO DO BOTÃO CADASTRAR, QUANDO FOR CLICADO
         cadastrar.setOnClickListener(v -> {
 
-            // PEGA OS DADOS DO USUÁRIO E CONVERTE PARA STRING
-            String tituloStr = titulo.getText().toString();
-            String autorStr = autor.getText().toString();
-            String isbnStr = isbn.getText().toString();
-            String generoStr = genero.getText().toString();
-            String paginasStr = numPaginas.getText().toString();
+            String tituloStr = titulo.getText().toString().trim();
+            String autorStr = autor.getText().toString().trim();
+            String isbnStr = isbn.getText().toString().trim();
+            String generoStr = genero.getText().toString().trim();
+            String paginasStr = numPaginas.getText().toString().trim();
 
-            // MENSAGEM FALANDO QUE O LIVRO FOI CADSTRADO
-            Toast.makeText(this, "Livro cadastrado com sucesso: " + tituloStr, Toast.LENGTH_SHORT).show();
+            if (tituloStr.isEmpty() ||
+                    autorStr.isEmpty() ||
+                    isbnStr.isEmpty() ||
+                    generoStr.isEmpty() ||
+                    paginasStr.isEmpty()) {
 
-            // CRIANDO O LIVRO
-            String livro = tituloStr + " - " + autorStr + " - ISBN: " + isbnStr;
+                Toast.makeText(
+                        LivrosActivity.this,
+                        "Preencha todos os campos",
+                        Toast.LENGTH_SHORT
+                ).show();
 
-            // SALVANDO NA LISTA
-            listaLivros.add(livro);
+                return;
+            }
 
-            // LIMPAR OS CAMPOS
-            titulo.setText("");
-            autor.setText("");
-            isbn.setText("");
-            genero.setText("");
-            numPaginas.setText("");
+            Livro livro = new Livro(
+                    tituloStr,
+                    autorStr,
+                    isbnStr,
+                    generoStr,
+                    Integer.parseInt(paginasStr),
+                    true
+            );
 
+            ApiService apiService =
+                    ApiClient.getRetrofit()
+                            .create(ApiService.class);
+
+            apiService.cadastrarLivro(livro)
+                    .enqueue(new Callback<Void>() {
+
+                        @Override
+                        public void onResponse(
+                                Call<Void> call,
+                                Response<Void> response
+                        ) {
+
+                            if (response.isSuccessful()) {
+
+                                Toast.makeText(
+                                        LivrosActivity.this,
+                                        "Livro cadastrado com sucesso!",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                titulo.setText("");
+                                autor.setText("");
+                                isbn.setText("");
+                                genero.setText("");
+                                numPaginas.setText("");
+
+                            } else {
+
+                                Toast.makeText(
+                                        LivrosActivity.this,
+                                        "Erro ao cadastrar livro",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<Void> call,
+                                Throwable t
+                        ) {
+
+                            Toast.makeText(
+                                    LivrosActivity.this,
+                                    "Erro ao conectar com o servidor",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                            t.printStackTrace();
+                        }
+                    });
         });
 
-        // AÇÃO DO BOTÃO LIVROS CADASTRADOS, QUANDO FOR CLICADO
         mostrarLivros.setOnClickListener(v -> {
-            Intent intent = new Intent(LivrosActivity.this, ListaLivrosActivity.class);
-            intent.putStringArrayListExtra("livros", listaLivros); // LEVANDO A LISTA DE LIVROS DESSA TELA PARA A TELA LISTA LIVROS
+
+            Intent intent = new Intent(
+                    LivrosActivity.this,
+                    ListaLivrosActivity.class
+            );
+
             startActivity(intent);
+
         });
 
-        // AÇÃO DO BOTÃO VOLTAR, QUANDO FOR CLICADO DEVE VOLTAR PARA A PÁGINA ANTERIOR
-        voltar.setOnClickListener(v -> {
-            finish();
-        });
+        voltar.setOnClickListener(v -> finish());
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        ViewCompat.setOnApplyWindowInsetsListener(
+                findViewById(R.id.main),
+                (v, insets) -> {
+
+                    Insets systemBars =
+                            insets.getInsets(
+                                    WindowInsetsCompat.Type.systemBars()
+                            );
+
+                    v.setPadding(
+                            systemBars.left,
+                            systemBars.top,
+                            systemBars.right,
+                            systemBars.bottom
+                    );
+
+                    return insets;
+                }
+        );
     }
 }
