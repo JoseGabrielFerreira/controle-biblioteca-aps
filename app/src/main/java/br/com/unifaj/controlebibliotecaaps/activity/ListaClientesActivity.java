@@ -1,4 +1,4 @@
-package br.com.unifaj.controlebibliotecaaps;
+package br.com.unifaj.controlebibliotecaaps.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.List;
 
+import br.com.unifaj.controlebibliotecaaps.model.Cliente;
+import br.com.unifaj.controlebibliotecaaps.R;
 import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
 import br.com.unifaj.controlebibliotecaaps.api.ApiService;
 
@@ -19,69 +21,68 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListaEmprestimosActivity extends AppCompatActivity {
+public class ListaClientesActivity extends AppCompatActivity {
 
-    TextView emprestimos;
-    Button voltarTelaEmprestimos;
+    TextView clientes;
+    Button voltarTelaClientesCadastrados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_lista_emprestimos);
+        setContentView(R.layout.activity_clientes_cadastrados);
 
-        emprestimos = findViewById(R.id.emprestimolivroText);
-        voltarTelaEmprestimos =
-                findViewById(R.id.btn_voltar_telaEmprestimo);
+        clientes = findViewById(R.id.clientestextView);
+
+        voltarTelaClientesCadastrados =
+                findViewById(R.id.btn_voltar_telaclientes_cadastrados);
 
         ApiService apiService =
-                ApiClient.getRetrofit()
-                        .create(ApiService.class);
+                ApiClient.getRetrofit().create(ApiService.class);
 
-        apiService.listarEmprestimos()
-                .enqueue(new Callback<List<Emprestimo>>() {
+        apiService.listarClientes()
+                .enqueue(new Callback<List<Cliente>>() {
 
                     @Override
                     public void onResponse(
-                            Call<List<Emprestimo>> call,
-                            Response<List<Emprestimo>> response
+                            Call<List<Cliente>> call,
+                            Response<List<Cliente>> response
                     ) {
 
                         if (response.isSuccessful()
                                 && response.body() != null) {
 
-                            List<Emprestimo> listaEmprestimos =
+                            List<Cliente> listaClientes =
                                     response.body();
 
-                            emprestimos.setText("");
+                            clientes.setText("");
 
-                            for (Emprestimo e : listaEmprestimos) {
+                            for (Cliente cliente : listaClientes) {
 
-                                emprestimos.append(
-                                        "CPF: " + e.getClienteCpf() +
-                                                "\nISBN: " + e.getLivroIsbn() +
-                                                "\nData Empréstimo: " + e.getDataEmprestimo() +
-                                                "\nData Devolução: " + e.getDataDevolucao() +
-                                                "\nStatus: " + e.getStatus() +
+                                clientes.append(
+                                        "Nome: " + cliente.getNome() +
+                                                "\nCPF: " + cliente.getCpf() +
+                                                "\nTelefone: " + cliente.getTelefone() +
+                                                "\nEmail: " + cliente.getEmail() +
                                                 "\n\n"
                                 );
                             }
 
                         } else {
 
-                            emprestimos.setText(
-                                    "Nenhum empréstimo encontrado."
+                            clientes.setText(
+                                    "Nenhum cliente encontrado."
                             );
                         }
                     }
 
                     @Override
                     public void onFailure(
-                            Call<List<Emprestimo>> call,
+                            Call<List<Cliente>> call,
                             Throwable t
                     ) {
 
-                        emprestimos.setText(
+                        clientes.setText(
                                 "Erro ao conectar ao servidor."
                         );
 
@@ -89,7 +90,7 @@ public class ListaEmprestimosActivity extends AppCompatActivity {
                     }
                 });
 
-        voltarTelaEmprestimos.setOnClickListener(
+        voltarTelaClientesCadastrados.setOnClickListener(
                 v -> finish()
         );
 

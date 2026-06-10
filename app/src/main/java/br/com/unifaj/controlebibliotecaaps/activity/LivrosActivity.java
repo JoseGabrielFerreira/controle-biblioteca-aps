@@ -1,4 +1,4 @@
-package br.com.unifaj.controlebibliotecaaps;
+package br.com.unifaj.controlebibliotecaaps.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import br.com.unifaj.controlebibliotecaaps.model.Livro;
+import br.com.unifaj.controlebibliotecaaps.R;
 import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
 import br.com.unifaj.controlebibliotecaaps.api.ApiService;
 
@@ -22,7 +24,11 @@ import retrofit2.Response;
 public class LivrosActivity extends AppCompatActivity {
 
     EditText titulo, autor, isbn, genero, numPaginas;
-    Button cadastrar, mostrarLivros, voltar;
+
+    Button cadastrar;
+    Button mostrarLivros;
+    Button voltar;
+    Button excluirLivro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,7 @@ public class LivrosActivity extends AppCompatActivity {
         cadastrar = findViewById(R.id.btn_cadastrar);
         mostrarLivros = findViewById(R.id.btn_mostrarLivros);
         voltar = findViewById(R.id.btn_voltar);
+        excluirLivro = findViewById(R.id.btn_excluir_livro);
 
         cadastrar.setOnClickListener(v -> {
 
@@ -48,11 +55,11 @@ public class LivrosActivity extends AppCompatActivity {
             String generoStr = genero.getText().toString().trim();
             String paginasStr = numPaginas.getText().toString().trim();
 
-            if (tituloStr.isEmpty() ||
-                    autorStr.isEmpty() ||
-                    isbnStr.isEmpty() ||
-                    generoStr.isEmpty() ||
-                    paginasStr.isEmpty()) {
+            if (tituloStr.isEmpty()
+                    || autorStr.isEmpty()
+                    || isbnStr.isEmpty()
+                    || generoStr.isEmpty()
+                    || paginasStr.isEmpty()) {
 
                 Toast.makeText(
                         LivrosActivity.this,
@@ -93,11 +100,7 @@ public class LivrosActivity extends AppCompatActivity {
                                         Toast.LENGTH_SHORT
                                 ).show();
 
-                                titulo.setText("");
-                                autor.setText("");
-                                isbn.setText("");
-                                genero.setText("");
-                                numPaginas.setText("");
+                                limparCampos();
 
                             } else {
 
@@ -134,7 +137,76 @@ public class LivrosActivity extends AppCompatActivity {
             );
 
             startActivity(intent);
+        });
 
+        excluirLivro.setOnClickListener(v -> {
+
+            String isbnStr = isbn.getText().toString().trim();
+
+            if (isbnStr.isEmpty()) {
+
+                Toast.makeText(
+                        LivrosActivity.this,
+                        "Digite o ISBN do livro",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return;
+            }
+
+            ApiService apiService =
+                    ApiClient.getRetrofit()
+                            .create(ApiService.class);
+
+            apiService.excluirLivro(isbnStr)
+                    .enqueue(new Callback<String>() {
+
+                        @Override
+                        public void onResponse(
+                                Call<String> call,
+                                Response<String> response
+                        ) {
+
+                            if (response.isSuccessful()) {
+
+                                String mensagem =
+                                        response.body() != null
+                                                ? response.body()
+                                                : "Livro removido com sucesso";
+
+                                Toast.makeText(
+                                        LivrosActivity.this,
+                                        mensagem,
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                limparCampos();
+
+                            } else {
+
+                                Toast.makeText(
+                                        LivrosActivity.this,
+                                        "Erro ao excluir livro",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<String> call,
+                                Throwable t
+                        ) {
+
+                            Toast.makeText(
+                                    LivrosActivity.this,
+                                    "Erro ao conectar com o servidor",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                            t.printStackTrace();
+                        }
+                    });
         });
 
         voltar.setOnClickListener(v -> finish());
@@ -158,5 +230,14 @@ public class LivrosActivity extends AppCompatActivity {
                     return insets;
                 }
         );
+    }
+
+    private void limparCampos() {
+
+        titulo.setText("");
+        autor.setText("");
+        isbn.setText("");
+        genero.setText("");
+        numPaginas.setText("");
     }
 }

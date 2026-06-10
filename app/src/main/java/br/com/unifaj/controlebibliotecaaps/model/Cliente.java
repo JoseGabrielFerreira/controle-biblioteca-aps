@@ -1,4 +1,4 @@
-package br.com.unifaj.controlebibliotecaaps;
+package br.com.unifaj.controlebibliotecaaps.model;
 
 public class Cliente {
 
@@ -6,20 +6,23 @@ public class Cliente {
     private String cpf;
     private String telefone;
     private String email;
-
-    public Cliente() {
-    }
+    private String login;
+    private String senha;
 
     public Cliente(
             String nome,
             String cpf,
             String telefone,
-            String email
+            String email,
+            String login,
+            String senha
     ) {
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.email = email;
+        this.login = login;
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -38,8 +41,11 @@ public class Cliente {
         return email;
     }
 
-    @Override
-    public String toString() {
-        return nome + " - CPF: " + cpf;
+    public String getLogin() {
+        return login;
+    }
+
+    public String getSenha() {
+        return senha;
     }
 }

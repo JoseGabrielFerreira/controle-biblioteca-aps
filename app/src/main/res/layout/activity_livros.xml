@@ -1,133 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LivrosActivity">
+    tools:context=".activity.LivrosActivity">
 
     <TextView
         android:id="@+id/cadastrarlivros_textView"
-        android:layout_width="288dp"
-        android:layout_height="61dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:fontFamily="@font/inter_semibold"
         android:text="Cadastrar Livros"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/titulo_editText"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
         android:hint="Título"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cadastrarlivros_textView" />
+        app:layout_constraintTop_toBottomOf="@id/cadastrarlivros_textView" />
 
     <EditText
         android:id="@+id/autor_editText"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
         android:hint="Autor"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titulo_editText" />
+        app:layout_constraintTop_toBottomOf="@id/titulo_editText" />
 
     <EditText
         android:id="@+id/isbn_editText"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
         android:hint="ISBN"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autor_editText" />
+        app:layout_constraintTop_toBottomOf="@id/autor_editText" />
 
     <EditText
         android:id="@+id/genero_editText"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
         android:hint="Gênero"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/isbn_editText" />
+        app:layout_constraintTop_toBottomOf="@id/isbn_editText" />
 
     <EditText
         android:id="@+id/numpg_editText"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
         android:hint="Número de páginas"
-        android:inputType="text"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genero_editText" />
-
-    <Button
-        android:id="@+id/btn_mostrarLivros"
-        android:layout_width="154dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="40dp"
-        android:text="LIVROS CADASTRADOS"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numpg_editText" />
+        app:layout_constraintTop_toBottomOf="@id/genero_editText" />
 
     <Button
         android:id="@+id/btn_cadastrar"
-        android:layout_width="142dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_width="145dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="@color/design_default_color_secondary_variant"
         android:fontFamily="@font/inter_medium"
         android:text="CADASTRAR"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toStartOf="@+id/btn_mostrarLivros"
-        app:layout_constraintHorizontal_bias="0.568"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numpg_editText" />
 
     <Button
+        android:id="@+id/btn_mostrarLivros"
+        android:layout_width="166dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="LIVROS CADASTRADOS"
+        android:textSize="12sp"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numpg_editText" />
+
+    <Button
         android:id="@+id/btn_voltar"
-        android:layout_width="138dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="124dp"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="36dp"
         android:backgroundTint="@android:color/holo_orange_dark"
         android:fontFamily="@font/inter_medium"
         android:text="VOLTAR"
         app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numpg_editText" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_cadastrar"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <Button
+        android:id="@+id/btn_excluir_livro"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="36dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="EXCLUIR LIVRO"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.686"
+        app:layout_constraintStart_toEndOf="@+id/btn_voltar"
+        app:layout_constraintTop_toBottomOf="@+id/btn_mostrarLivros"
+        app:layout_constraintVertical_bias="0.03" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

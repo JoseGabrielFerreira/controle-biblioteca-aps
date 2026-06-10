@@ -1,4 +1,4 @@
-package br.com.unifaj.controlebibliotecaaps;
+package br.com.unifaj.controlebibliotecaaps.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import br.com.unifaj.controlebibliotecaaps.R;
 import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
 import br.com.unifaj.controlebibliotecaaps.api.ApiService;
 import br.com.unifaj.controlebibliotecaaps.model.LoginRequest;
@@ -48,7 +49,8 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             ApiService apiService =
-                    ApiClient.getRetrofit().create(ApiService.class);
+                    ApiClient.getRetrofit()
+                            .create(ApiService.class);
 
             LoginRequest request =
                     new LoginRequest(login, senha);
@@ -67,18 +69,24 @@ public class LoginActivity extends AppCompatActivity {
 
                                 Usuario usuario = response.body();
 
-                                Intent intent = new Intent(
-                                        LoginActivity.this,
-                                        MenuActivity.class
-                                );
+                                Intent intent;
 
-                                intent.putExtra(
-                                        "perfil",
-                                        usuario.getPerfil()
-                                );
+                                if (usuario.getPerfil().equals("ADMIN")) {
+
+                                    intent = new Intent(
+                                            LoginActivity.this,
+                                            MenuActivity.class
+                                    );
+
+                                } else {
+
+                                    intent = new Intent(
+                                            LoginActivity.this,
+                                            MenuUsuarioActivity.class
+                                    );
+                                }
 
                                 startActivity(intent);
-
                                 finish();
 
                             } else {

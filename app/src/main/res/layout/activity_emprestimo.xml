@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/white"
-    tools:context=".EmprestimoActivity">
+    tools:context=".activity.EmprestimoActivity">
+
+    <Button
+        android:id="@+id/btn_excluir_emprestimo"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="EXCLUIR EMPRÉSTIMO"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_voltarEmprestimos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_devolver"
+        app:layout_constraintTop_toBottomOf="@+id/btn_verEmprestimos"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/emprestimotextView"
@@ -22,99 +38,106 @@
 
     <EditText
         android:id="@+id/nomeClienteeditText"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
-        android:hint="Nome do Cliente"
+        android:hint="Cliente CPF"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emprestimotextView" />
+        app:layout_constraintTop_toBottomOf="@id/emprestimotextView" />
 
     <EditText
         android:id="@+id/livroEmprestimoeditText"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
-        android:hint="Nome do Livro"
+        android:hint="Livro ISBN"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeClienteeditText" />
-
-    <Button
-        android:id="@+id/btn_registrar_emprestimo"
-        android:layout_width="168dp"
-        android:layout_height="93dp"
-        android:layout_marginTop="44dp"
-        android:backgroundTint="@color/design_default_color_secondary_variant"
-        android:fontFamily="@font/inter_medium"
-        android:text="REGISTRAR EMPRÉSTIMO"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toStartOf="@+id/btn_verEmprestimos"
-        app:layout_constraintHorizontal_bias="0.84"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
-
-    <Button
-        android:id="@+id/btn_verEmprestimos"
-        android:layout_width="157dp"
-        android:layout_height="91dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="@font/inter_medium"
-        android:text="VER EMPRÉSTIMOS"
-        app:cornerRadius="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4" />
-
-    <Button
-        android:id="@+id/btn_voltarEmprestimos"
-        android:layout_width="190dp"
-        android:layout_height="89dp"
-        android:layout_marginBottom="52dp"
-        android:backgroundTint="@android:color/holo_orange_dark"
-        android:text="VOLTAR"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_registrar_emprestimo" />
+        app:layout_constraintTop_toBottomOf="@id/nomeClienteeditText" />
 
     <EditText
         android:id="@+id/dataEmprestimo_editTextText"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
         android:hint="Data do empréstimo"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/livroEmprestimoeditText" />
+        app:layout_constraintTop_toBottomOf="@id/livroEmprestimoeditText" />
 
     <EditText
         android:id="@+id/editTextText4"
-        android:layout_width="wrap_content"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="@color/white"
-        android:ems="10"
         android:fontFamily="@font/inter_medium"
         android:hint="Prazo de devolução"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dataEmprestimo_editTextText" />
+        app:layout_constraintTop_toBottomOf="@id/dataEmprestimo_editTextText" />
+
+    <Button
+        android:id="@+id/btn_registrar_emprestimo"
+        android:layout_width="145dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:fontFamily="@font/inter_medium"
+        android:text="REGISTRAR"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_verEmprestimos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextText4" />
+
+    <Button
+        android:id="@+id/btn_verEmprestimos"
+        android:layout_width="152dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="EMPRÉSTIMOS"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_registrar_emprestimo"
+        app:layout_constraintTop_toBottomOf="@id/editTextText4" />
+
+    <Button
+        android:id="@+id/btn_devolver"
+        android:layout_width="170dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:text="DEVOLVER LIVRO"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.112"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_registrar_emprestimo" />
+
+    <Button
+        android:id="@+id/btn_voltarEmprestimos"
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:backgroundTint="@android:color/holo_orange_dark"
+        android:text="VOLTAR"
+        app:cornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_devolver"
+        app:layout_constraintVertical_bias="0.322" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

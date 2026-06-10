@@ -1,4 +1,4 @@
-package br.com.unifaj.controlebibliotecaaps;
+package br.com.unifaj.controlebibliotecaaps.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import br.com.unifaj.controlebibliotecaaps.model.Cliente;
+import br.com.unifaj.controlebibliotecaaps.R;
 import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
 import br.com.unifaj.controlebibliotecaaps.api.ApiService;
 
@@ -21,8 +23,8 @@ import retrofit2.Response;
 
 public class ClientesActivity extends AppCompatActivity {
 
-    EditText nome, cpf, telefone, endereco;
-    Button cadastrarClientes, clientesCadastrados, voltarCC;
+    EditText nome, cpf, telefone, email, loginU, senhaU;
+    Button cadastrarClientes, clientesCadastrados, voltarCC, excluirCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +35,31 @@ public class ClientesActivity extends AppCompatActivity {
         nome = findViewById(R.id.nomeClienteTextText);
         cpf = findViewById(R.id.cpfTextText);
         telefone = findViewById(R.id.telefoneEditTextText);
-        endereco = findViewById(R.id.enderecoEditTextText);
+        email = findViewById(R.id.emailEditTextText);
+        loginU = findViewById(R.id.EditTextTextLogin);
+        senhaU = findViewById(R.id.EditTextTextSenha);
+
 
         cadastrarClientes = findViewById(R.id.btn_cadastrat_cliente);
         clientesCadastrados = findViewById(R.id.btn_clientes_cadastrados);
         voltarCC = findViewById(R.id.btn_voltar_CC);
+        excluirCliente = findViewById(R.id.btn_excluir_cliente);
 
         cadastrarClientes.setOnClickListener(v -> {
 
             String nomeStr = nome.getText().toString().trim();
             String cpfStr = cpf.getText().toString().trim();
             String telefoneStr = telefone.getText().toString().trim();
-            String emailStr = endereco.getText().toString().trim();
+            String emailStr = email.getText().toString().trim();
+            String loginStr = loginU.getText().toString().trim();
+            String senhaStr = senhaU.getText().toString().trim();
 
             if (nomeStr.isEmpty()
                     || cpfStr.isEmpty()
                     || telefoneStr.isEmpty()
-                    || emailStr.isEmpty()) {
+                    || emailStr.isEmpty()
+                    || loginStr.isEmpty()
+                    || senhaStr.isEmpty()) {
 
                 Toast.makeText(
                         ClientesActivity.this,
@@ -64,7 +74,9 @@ public class ClientesActivity extends AppCompatActivity {
                     nomeStr,
                     cpfStr,
                     telefoneStr,
-                    emailStr
+                    emailStr,
+                    loginStr,
+                    senhaStr
             );
 
             ApiService apiService =
@@ -91,7 +103,9 @@ public class ClientesActivity extends AppCompatActivity {
                                 nome.setText("");
                                 cpf.setText("");
                                 telefone.setText("");
-                                endereco.setText("");
+                                email.setText("");
+                                loginU.setText("");
+                                senhaU.setText("");
 
                             } else {
 
@@ -128,6 +142,77 @@ public class ClientesActivity extends AppCompatActivity {
             );
 
             startActivity(intent);
+        });
+
+        excluirCliente.setOnClickListener(v -> {
+
+            String cpfStr =
+                    cpf.getText().toString().trim();
+
+            if (cpfStr.isEmpty()) {
+
+                Toast.makeText(
+                        ClientesActivity.this,
+                        "Digite o CPF do cliente",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return;
+            }
+
+            ApiService apiService =
+                    ApiClient.getRetrofit()
+                            .create(ApiService.class);
+
+            apiService.excluirCliente(cpfStr)
+                    .enqueue(new Callback<String>() {
+
+                        @Override
+                        public void onResponse(
+                                Call<String> call,
+                                Response<String> response
+                        ) {
+
+                            if (response.isSuccessful()) {
+
+                                Toast.makeText(
+                                        ClientesActivity.this,
+                                        response.body(),
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                nome.setText("");
+                                cpf.setText("");
+                                telefone.setText("");
+                                email.setText("");
+                                loginU.setText("");
+                                senhaU.setText("");
+
+                            } else {
+
+                                Toast.makeText(
+                                        ClientesActivity.this,
+                                        "Erro ao excluir cliente",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(
+                                Call<String> call,
+                                Throwable t
+                        ) {
+
+                            Toast.makeText(
+                                    ClientesActivity.this,
+                                    "Erro ao conectar com servidor",
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                            t.printStackTrace();
+                        }
+                    });
         });
 
         voltarCC.setOnClickListener(v -> finish());

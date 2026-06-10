@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -15,44 +16,49 @@
         android:theme="@style/Theme.ControleBibliotecaAps">
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
         </activity>
 
         <activity
-            android:name=".ListaEmprestimosActivity"
+            android:name=".activity.MenuActivity"
             android:exported="false" />
 
         <activity
-            android:name=".EmprestimoActivity"
+            android:name=".activity.MenuUsuarioActivity"
             android:exported="false" />
 
         <activity
-            android:name=".ListaClientesActivity"
+            android:name=".activity.LivrosActivity"
             android:exported="false" />
 
         <activity
-            android:name=".ListaLivrosActivity"
+            android:name=".activity.ListaLivrosActivity"
             android:exported="false" />
 
         <activity
-            android:name=".ClientesActivity"
+            android:name=".activity.ClientesActivity"
             android:exported="false" />
 
         <activity
-            android:name=".LivrosActivity"
+            android:name=".activity.ListaClientesActivity"
             android:exported="false" />
 
         <activity
-            android:name=".MenuActivity"
+            android:name=".activity.EmprestimoActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activity.ListaEmprestimosActivity"
+            android:exported="false" />
+
+        <activity android:name=".activity.DevolverLivroActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

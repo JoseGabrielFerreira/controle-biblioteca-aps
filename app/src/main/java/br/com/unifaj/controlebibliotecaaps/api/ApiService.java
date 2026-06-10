@@ -2,9 +2,9 @@ package br.com.unifaj.controlebibliotecaaps.api;
 
 import java.util.List;
 
-import br.com.unifaj.controlebibliotecaaps.Cliente;
-import br.com.unifaj.controlebibliotecaaps.Emprestimo;
-import br.com.unifaj.controlebibliotecaaps.Livro;
+import br.com.unifaj.controlebibliotecaaps.model.Cliente;
+import br.com.unifaj.controlebibliotecaaps.model.Emprestimo;
+import br.com.unifaj.controlebibliotecaaps.model.Livro;
 import br.com.unifaj.controlebibliotecaaps.model.LoginRequest;
 import br.com.unifaj.controlebibliotecaaps.model.Usuario;
 
@@ -53,8 +53,31 @@ public interface ApiService {
     Call<List<Emprestimo>> listarEmprestimos();
 
     @POST("emprestimos")
-    Call<Void> cadastrarEmprestimo(
+    Call<String> cadastrarEmprestimo(
             @Body Emprestimo emprestimo
     );
+    @PUT("emprestimos/devolver/{isbn}")
+    Call<String> devolverLivro(
+            @Path("isbn") String isbn
+    );
+
+    @POST("usuarios")
+    Call<Void> cadastrarUsuario(
+            @Body Usuario usuario
+    );
+
+    @GET("usuarios")
+    Call<List<Usuario>> listarUsuarios();
+
+    @DELETE("clientes/{cpf}")
+    Call<String> excluirCliente(
+            @Path("cpf") String cpf
+    );
+
+    @DELETE("emprestimos/{isbn}")
+    Call<String> excluirEmprestimo(
+            @Path("isbn") String isbn
+    );
+
 
 }

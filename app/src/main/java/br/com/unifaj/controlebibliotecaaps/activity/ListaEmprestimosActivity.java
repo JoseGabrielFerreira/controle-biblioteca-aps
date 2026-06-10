@@ -1,9 +1,8 @@
-package br.com.unifaj.controlebibliotecaaps;
+package br.com.unifaj.controlebibliotecaaps.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +12,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import java.util.List;
 
+import br.com.unifaj.controlebibliotecaaps.model.Emprestimo;
+import br.com.unifaj.controlebibliotecaaps.R;
 import br.com.unifaj.controlebibliotecaaps.api.ApiClient;
 import br.com.unifaj.controlebibliotecaaps.api.ApiService;
 
@@ -20,84 +21,79 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ListaLivrosActivity extends AppCompatActivity {
+public class ListaEmprestimosActivity extends AppCompatActivity {
 
-    TextView livrosCadastrados;
-    Button voltarLC;
+    TextView emprestimos;
+    Button voltarTelaEmprestimos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_lista_livros);
+        setContentView(R.layout.activity_lista_emprestimos);
 
-        livrosCadastrados = findViewById(R.id.livrosCadastradosText);
-        voltarLC = findViewById(R.id.btn_voltarLC);
+        emprestimos = findViewById(R.id.emprestimolivroText);
+        voltarTelaEmprestimos =
+                findViewById(R.id.btn_voltar_telaEmprestimo);
 
         ApiService apiService =
                 ApiClient.getRetrofit()
                         .create(ApiService.class);
 
-        apiService.listarLivros()
-                .enqueue(new Callback<List<Livro>>() {
+        apiService.listarEmprestimos()
+                .enqueue(new Callback<List<Emprestimo>>() {
 
                     @Override
                     public void onResponse(
-                            Call<List<Livro>> call,
-                            Response<List<Livro>> response
+                            Call<List<Emprestimo>> call,
+                            Response<List<Emprestimo>> response
                     ) {
 
                         if (response.isSuccessful()
                                 && response.body() != null) {
 
-                            List<Livro> livros =
+                            List<Emprestimo> listaEmprestimos =
                                     response.body();
 
-                            StringBuilder texto =
-                                    new StringBuilder();
+                            emprestimos.setText("");
 
-                            for (Livro livro : livros) {
+                            for (Emprestimo e : listaEmprestimos) {
 
-                                texto.append("Título: ")
-                                        .append(livro.getTitulo())
-                                        .append("\n");
-
-                                texto.append("Autor: ")
-                                        .append(livro.getAutor())
-                                        .append("\n");
-
-                                texto.append("ISBN: ")
-                                        .append(livro.getIsbn())
-                                        .append("\n\n");
+                                emprestimos.append(
+                                        "CPF: " + e.getClienteCpf() +
+                                                "\nISBN: " + e.getLivroIsbn() +
+                                                "\nData Empréstimo: " + e.getDataEmprestimo() +
+                                                "\nData Devolução: " + e.getDataDevolucao() +
+                                                "\nStatus: " + e.getStatus() +
+                                                "\n\n"
+                                );
                             }
-
-                            livrosCadastrados.setText(
-                                    texto.toString()
-                            );
 
                         } else {
 
-                            livrosCadastrados.setText(
-                                    "Nenhum livro encontrado."
+                            emprestimos.setText(
+                                    "Nenhum empréstimo encontrado."
                             );
                         }
                     }
 
                     @Override
                     public void onFailure(
-                            Call<List<Livro>> call,
+                            Call<List<Emprestimo>> call,
                             Throwable t
                     ) {
 
-                        Toast.makeText(
-                                ListaLivrosActivity.this,
-                                "Erro ao conectar com servidor",
-                                Toast.LENGTH_LONG
-                        ).show();
+                        emprestimos.setText(
+                                "Erro ao conectar ao servidor."
+                        );
+
+                        t.printStackTrace();
                     }
                 });
 
-        voltarLC.setOnClickListener(v -> finish());
+        voltarTelaEmprestimos.setOnClickListener(
+                v -> finish()
+        );
 
         ViewCompat.setOnApplyWindowInsetsListener(
                 findViewById(R.id.main),

@@ -1,12 +1,14 @@
 package br.com.unifaj.controlebibliotecaaps.api;
 
 import retrofit2.Retrofit;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class ApiClient {
 
-    // TROCAR PELO IP DO SEU COMPUTADOR
-    private static final String BASE_URL = "http://10.0.2.2:8080/";
+    private static final String BASE_URL =
+            "http://10.0.2.2:8080/";
 
     private static Retrofit retrofit;
 
@@ -16,9 +18,17 @@ public class ApiClient {
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+
+                    // Strings simples
+                    .addConverterFactory(
+                            ScalarsConverterFactory.create()
+                    )
+
+                    // JSON
                     .addConverterFactory(
                             GsonConverterFactory.create()
                     )
+
                     .build();
         }
 
